@@ -5,6 +5,8 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import com.bumptech.glide.Glide;
 
+import org.json.JSONException;
+
 import java.util.ArrayList;
 
 public class MemeController {
@@ -29,7 +31,13 @@ public class MemeController {
             meme = memes.get(currentMemeIndex + 1);
         } else {
             MemeReceiver memeReceiver = new MemeReceiver();
-            meme = memeReceiver.getRandomMeme();
+            try {
+                meme = memeReceiver.getRandomMeme();
+            } catch (InterruptedException | JSONException e) {
+                textViewDescriptionMeme.setText(R.string.loading_error);
+                e.printStackTrace();
+            } finally {
+            }
             memes.add(meme);
         }
 

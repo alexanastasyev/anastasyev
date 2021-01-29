@@ -26,7 +26,7 @@ public class MemeReceiver {
     private final String GIF_URL_KEY = "gifURL";
     private final String GIF_DESCRIPTION_KEY = "description";
 
-    public Meme getRandomMeme() {
+    public Meme getRandomMeme() throws InterruptedException, JSONException {
 
         GetMemeTask getMemeTask = new GetMemeTask();
         try {
@@ -35,8 +35,6 @@ public class MemeReceiver {
 
             String descriptionGif = json.getString(GIF_DESCRIPTION_KEY);
             return new Meme(gifUrl, descriptionGif);
-
-
         } catch (
                 ExecutionException e) {
             e.printStackTrace();
