@@ -23,7 +23,6 @@ public class MemeController {
     }
 
     public void nextMeme() {
-
         Meme meme = null;
 
         if (currentMemeIndex + 1 < memes.size()) {

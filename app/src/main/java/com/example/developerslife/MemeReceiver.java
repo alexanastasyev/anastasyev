@@ -3,7 +3,9 @@ package com.example.developerslife;
 import android.content.Context;
 import android.os.AsyncTask;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 
@@ -31,17 +33,7 @@ public class MemeReceiver {
             JSONObject json = getMemeTask.execute(GET_RANDOM_MEME_URL).get();
             String gifUrl = json.getString(GIF_URL_KEY);
 
-            /*
-            Glide
-                    .with(context)
-                    .load(gifUrl)
-                    .into(imageView);
-            */
-
             String descriptionGif = json.getString(GIF_DESCRIPTION_KEY);
-
-            // textViewDescription.setText(descriptionGif);
-
             return new Meme(gifUrl, descriptionGif);
 
 
@@ -62,6 +54,9 @@ public class MemeReceiver {
 
         @Override
         protected JSONObject doInBackground(String... strings) {
+
+            publishProgress();
+
             URL url = null;
             HttpURLConnection httpURLConnection = null;
 
@@ -77,7 +72,6 @@ public class MemeReceiver {
                     stringBuilder.append(line);
                     line = bufferedReader.readLine();
                 }
-
                 String jsonString = stringBuilder.toString();
 
                 try {

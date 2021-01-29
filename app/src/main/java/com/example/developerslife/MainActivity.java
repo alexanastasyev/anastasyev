@@ -44,6 +44,7 @@ public class MainActivity extends AppCompatActivity {
         AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
 
         floatingActionButtonPrevious = findViewById(R.id.floatingActionButtonPrevious);
+        floatingActionButtonPrevious.setClickable(false);
 
         imageViewGif = findViewById(R.id.imageViewGif);
         textViewDescription = findViewById(R.id.textViewDescription);
