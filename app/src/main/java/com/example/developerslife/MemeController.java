@@ -51,13 +51,15 @@ public class MemeController {
                     } catch (InterruptedException | JSONException e) {
                         textViewDescriptionMeme.setText(R.string.loading_error);
                         e.printStackTrace();
-                    } finally {
                     }
-                    memesRandom.add(meme);
+                    if (meme != null) {
+                        memesRandom.add(meme);
+                    }
                 }
-
-                setMeme(meme);
-                currentRandomMemeIndex++;
+                if (meme != null) {
+                    setMeme(meme);
+                    currentRandomMemeIndex++;
+                }
                 break;
 
             case MODE_TOP:
@@ -70,13 +72,15 @@ public class MemeController {
                     } catch (InterruptedException | JSONException e) {
                         textViewDescriptionMeme.setText(R.string.loading_error);
                         e.printStackTrace();
-                    } finally {
                     }
-                    memesTop.add(meme);
+                    if (meme != null) {
+                        memesTop.add(meme);
+                    }
                 }
-
-                setMeme(meme);
-                currentTopMemeIndex++;
+                if (meme != null) {
+                    setMeme(meme);
+                    currentTopMemeIndex++;
+                }
                 break;
 
             case MODE_NEW:
@@ -89,14 +93,19 @@ public class MemeController {
                     } catch (InterruptedException | JSONException e) {
                         textViewDescriptionMeme.setText(R.string.loading_error);
                         e.printStackTrace();
-                    } finally {
                     }
-                    memesNew.add(meme);
+                    if (meme != null) {
+                        memesNew.add(meme);
+                    }
                 }
-
-                setMeme(meme);
-                currentNewMemeIndex++;
+                if (meme != null) {
+                    setMeme(meme);
+                    currentNewMemeIndex++;
+                }
                 break;
+
+            default:
+                textViewDescriptionMeme.setText(R.string.loading_error);
         }
 
     }
@@ -127,6 +136,9 @@ public class MemeController {
                 }
                 break;
 
+            default:
+                textViewDescriptionMeme.setText(R.string.loading_error);
+
         }
 
     }
@@ -139,6 +151,18 @@ public class MemeController {
                 return currentTopMemeIndex == 0;
             case MODE_NEW:
                 return currentNewMemeIndex == 0;
+        }
+        return false;
+    }
+
+    public boolean isNullPosition() {
+        switch (mode) {
+            case MODE_RANDOM:
+                return currentRandomMemeIndex == -1;
+            case MODE_TOP:
+                return currentTopMemeIndex == -1;
+            case MODE_NEW:
+                return currentNewMemeIndex == -1;
         }
         return false;
     }

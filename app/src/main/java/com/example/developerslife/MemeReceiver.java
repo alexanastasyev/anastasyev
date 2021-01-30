@@ -30,7 +30,6 @@ public class MemeReceiver {
     private final String GIF_URL_KEY = "gifURL";
     private final String GIF_DESCRIPTION_KEY = "description";
     private final String MEMES_RESULT_ARRAY_KEY = "result";
-
     private final int MEMES_PER_PAGE = 5;
 
     public Meme getRandomMeme() throws InterruptedException, JSONException {
@@ -38,8 +37,10 @@ public class MemeReceiver {
         GetMemeTask getMemeTask = new GetMemeTask();
         try {
             JSONObject json = getMemeTask.execute(GET_RANDOM_MEME_URL).get();
+            if (json == null) {
+                throw new JSONException("Ошибка загрузки!");
+            }
             String gifUrl = json.getString(GIF_URL_KEY);
-
             String descriptionGif = json.getString(GIF_DESCRIPTION_KEY);
             return new Meme(gifUrl, descriptionGif);
         } catch (
@@ -47,8 +48,10 @@ public class MemeReceiver {
             e.printStackTrace();
         } catch (InterruptedException e) {
             e.printStackTrace();
+            throw new InterruptedException();
         } catch (JSONException e) {
             e.printStackTrace();
+            throw new JSONException("Ошибка загрузки.");
         }
 
         return null;
@@ -63,6 +66,9 @@ public class MemeReceiver {
             int memeIndex = topIndex % MEMES_PER_PAGE;
 
             JSONObject json = getMemeTask.execute(String.format(GET_TOP_MEMES_URL, pageNumber)).get();
+            if (json == null) {
+                throw new JSONException("Ошибка загрузки!");
+            }
             JSONArray memesJsonArray = json.getJSONArray(MEMES_RESULT_ARRAY_KEY);
             ArrayList<Meme> result = new ArrayList<>();
             for (int i = 0; i < MEMES_PER_PAGE; i++) {
@@ -77,8 +83,10 @@ public class MemeReceiver {
             e.printStackTrace();
         } catch (InterruptedException e) {
             e.printStackTrace();
+            throw new InterruptedException();
         } catch (JSONException e) {
             e.printStackTrace();
+            throw new JSONException("Ошибка загрузки.");
         }
 
         return null;
@@ -93,6 +101,9 @@ public class MemeReceiver {
             int memeIndex = topIndex % MEMES_PER_PAGE;
 
             JSONObject json = getMemeTask.execute(String.format(GET_NEW_MEMES_URL, pageNumber)).get();
+            if (json == null) {
+                throw new JSONException("Ошибка загрузки!");
+            }
             JSONArray memesJsonArray = json.getJSONArray(MEMES_RESULT_ARRAY_KEY);
             ArrayList<Meme> result = new ArrayList<>();
             for (int i = 0; i < MEMES_PER_PAGE; i++) {
@@ -107,8 +118,10 @@ public class MemeReceiver {
             e.printStackTrace();
         } catch (InterruptedException e) {
             e.printStackTrace();
+            throw new InterruptedException();
         } catch (JSONException e) {
             e.printStackTrace();
+            throw new JSONException("Ошибка загрузки.");
         }
 
         return null;
