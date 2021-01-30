@@ -9,4 +9,6 @@
     <color name="white">#FFFFFFFF</color>
     <color name="clickable">#FF00BCD4</color>
     <color name="not_clickable">#FFC6CBCC</color>
+    <color name="chosen">#FF00BCD4</color>
+    <color name="not_chosen">#FFC6CBCC</color>
 </resources>

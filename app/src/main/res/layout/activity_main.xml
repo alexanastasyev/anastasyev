@@ -7,6 +7,52 @@
     android:backgroundTint="#00BCD4"
     tools:context=".MainActivity">
 
+    <TextView
+        android:id="@+id/textViewModTop"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="@string/mod_best"
+        android:gravity="center"
+        android:textColor="@color/not_chosen"
+        android:onClick="onClickSetModeTop"
+        app:layout_constraintBottom_toTopOf="@+id/guideline2"
+        app:layout_constraintEnd_toStartOf="@+id/textViewModNew"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/textViewModNew"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="@string/mod_new"
+        android:gravity="center"
+        android:textColor="@color/not_chosen"
+        android:onClick="onClickSetModeNew"
+        app:layout_constraintBottom_toTopOf="@+id/guideline2"
+        app:layout_constraintEnd_toStartOf="@+id/textViewModRandom"
+        app:layout_constraintStart_toEndOf="@+id/textViewModTop"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/textViewModRandom"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="@string/mod_random"
+        android:gravity="center"
+        android:textColor="@color/chosen"
+        android:onClick="onClickSetModeRandom"
+        app:layout_constraintBottom_toTopOf="@+id/guideline2"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/textViewModNew"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.1"/>
+
     <ImageView
         android:id="@+id/imageViewGif"
         android:layout_width="0dp"
@@ -16,7 +62,7 @@
         app:layout_constraintBottom_toTopOf="@+id/guideline"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/guideline2"
         app:srcCompat="@drawable/ic_launcher_background" />
 
     <androidx.constraintlayout.widget.Guideline
@@ -24,7 +70,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        app:layout_constraintGuide_percent="0.5" />
+        app:layout_constraintGuide_percent="0.6" />
 
     <TextView
         android:id="@+id/textViewDescription"
@@ -64,5 +110,8 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/floatingActionButtonPrevious"
         app:srcCompat="@drawable/next" />
+
+
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>

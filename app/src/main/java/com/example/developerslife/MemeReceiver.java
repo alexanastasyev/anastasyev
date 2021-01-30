@@ -9,6 +9,7 @@ import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -19,12 +20,18 @@ import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.concurrent.ExecutionException;
 
 public class MemeReceiver {
     private final String GET_RANDOM_MEME_URL = "https://developerslife.ru/random?json=true";
+    private final String GET_TOP_MEMES_URL = "https://developerslife.ru/top/%s?json=true";
+    private final String GET_NEW_MEMES_URL = "https://developerslife.ru/latest/%s?json=true";
     private final String GIF_URL_KEY = "gifURL";
     private final String GIF_DESCRIPTION_KEY = "description";
+    private final String MEMES_RESULT_ARRAY_KEY = "result";
+
+    private final int MEMES_PER_PAGE = 5;
 
     public Meme getRandomMeme() throws InterruptedException, JSONException {
 
@@ -45,7 +52,66 @@ public class MemeReceiver {
         }
 
         return null;
+    }
 
+    public Meme getTopMeme(int topIndex) throws InterruptedException, JSONException {
+
+        GetMemeTask getMemeTask = new GetMemeTask();
+        try {
+
+            int pageNumber = (int) (topIndex / MEMES_PER_PAGE);
+            int memeIndex = topIndex % MEMES_PER_PAGE;
+
+            JSONObject json = getMemeTask.execute(String.format(GET_TOP_MEMES_URL, pageNumber)).get();
+            JSONArray memesJsonArray = json.getJSONArray(MEMES_RESULT_ARRAY_KEY);
+            ArrayList<Meme> result = new ArrayList<>();
+            for (int i = 0; i < MEMES_PER_PAGE; i++) {
+                JSONObject memeSingleJson = memesJsonArray.getJSONObject(i);
+                String gifUrl = memeSingleJson.getString(GIF_URL_KEY);
+                String descriptionGif = memeSingleJson.getString(GIF_DESCRIPTION_KEY);
+                result.add(new Meme(gifUrl, descriptionGif));
+            }
+            return result.get(memeIndex);
+        } catch (
+                ExecutionException e) {
+            e.printStackTrace();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+        return null;
+    }
+
+    public Meme getNewMeme(int topIndex) throws InterruptedException, JSONException {
+
+        GetMemeTask getMemeTask = new GetMemeTask();
+        try {
+
+            int pageNumber = (int) (topIndex / MEMES_PER_PAGE);
+            int memeIndex = topIndex % MEMES_PER_PAGE;
+
+            JSONObject json = getMemeTask.execute(String.format(GET_NEW_MEMES_URL, pageNumber)).get();
+            JSONArray memesJsonArray = json.getJSONArray(MEMES_RESULT_ARRAY_KEY);
+            ArrayList<Meme> result = new ArrayList<>();
+            for (int i = 0; i < MEMES_PER_PAGE; i++) {
+                JSONObject memeSingleJson = memesJsonArray.getJSONObject(i);
+                String gifUrl = memeSingleJson.getString(GIF_URL_KEY);
+                String descriptionGif = memeSingleJson.getString(GIF_DESCRIPTION_KEY);
+                result.add(new Meme(gifUrl, descriptionGif));
+            }
+            return result.get(memeIndex);
+        } catch (
+                ExecutionException e) {
+            e.printStackTrace();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+        return null;
     }
 
     private static class GetMemeTask extends AsyncTask<String, Void, JSONObject> {
@@ -92,5 +158,7 @@ public class MemeReceiver {
             return null;
         }
     }
+
+
 
 }

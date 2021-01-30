@@ -2,4 +2,7 @@
     <string name="app_name">Developers Life</string>
     <string name="gif">gif-изображение</string>
     <string name="loading_error" textColor="#FF0000">Ошибка загрузки!</string>
+    <string name="mod_best">Лучшее</string>
+    <string name="mod_new">Новое</string>
+    <string name="mod_random">Рандом</string>
 </resources>

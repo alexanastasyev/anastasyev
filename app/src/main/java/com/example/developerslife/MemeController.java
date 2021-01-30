@@ -10,53 +10,145 @@ import org.json.JSONException;
 import java.util.ArrayList;
 
 public class MemeController {
-    private ArrayList<Meme> memes = new ArrayList<>();
+    public final int MODE_TOP = 0;
+    public final int MODE_NEW = 1;
+    public final int MODE_RANDOM = 2;
+
+    private ArrayList<Meme> memesRandom = new ArrayList<>();
+    private int currentRandomMemeIndex;
+
+    private ArrayList<Meme> memesTop = new ArrayList<>();
+    private int currentTopMemeIndex;
+
+    private ArrayList<Meme> memesNew = new ArrayList<>();
+    private int currentNewMemeIndex;
 
     private Context context;
     private ImageView imageViewMeme;
     private TextView textViewDescriptionMeme;
-    private int currentMemeIndex;
+    private int mode;
 
     public MemeController(Context context, ImageView imageViewMeme, TextView textViewDescriptionMeme) {
         this.context = context;
         this.imageViewMeme = imageViewMeme;
         this.textViewDescriptionMeme = textViewDescriptionMeme;
-        currentMemeIndex = -1;
+        currentRandomMemeIndex = -1;
+        currentTopMemeIndex = -1;
+        currentNewMemeIndex = -1;
+        mode = MODE_RANDOM;
     }
 
     public void nextMeme() {
         Meme meme = null;
+        switch (mode) {
+            case MODE_RANDOM:
+                if (currentRandomMemeIndex + 1 < memesRandom.size()) {
+                    meme = memesRandom.get(currentRandomMemeIndex + 1);
+                } else {
+                    MemeReceiver memeReceiver = new MemeReceiver();
+                    try {
+                        meme = memeReceiver.getRandomMeme();
+                    } catch (InterruptedException | JSONException e) {
+                        textViewDescriptionMeme.setText(R.string.loading_error);
+                        e.printStackTrace();
+                    } finally {
+                    }
+                    memesRandom.add(meme);
+                }
 
-        if (currentMemeIndex + 1 < memes.size()) {
-            meme = memes.get(currentMemeIndex + 1);
-        } else {
-            MemeReceiver memeReceiver = new MemeReceiver();
-            try {
-                meme = memeReceiver.getRandomMeme();
-            } catch (InterruptedException | JSONException e) {
-                textViewDescriptionMeme.setText(R.string.loading_error);
-                e.printStackTrace();
-            } finally {
-            }
-            memes.add(meme);
+                setMeme(meme);
+                currentRandomMemeIndex++;
+                break;
+
+            case MODE_TOP:
+                if (currentTopMemeIndex + 1 < memesTop.size()) {
+                    meme = memesTop.get(currentTopMemeIndex + 1);
+                } else {
+                    MemeReceiver memeReceiver = new MemeReceiver();
+                    try {
+                        meme = memeReceiver.getTopMeme(currentTopMemeIndex + 1);
+                    } catch (InterruptedException | JSONException e) {
+                        textViewDescriptionMeme.setText(R.string.loading_error);
+                        e.printStackTrace();
+                    } finally {
+                    }
+                    memesTop.add(meme);
+                }
+
+                setMeme(meme);
+                currentTopMemeIndex++;
+                break;
+
+            case MODE_NEW:
+                if (currentNewMemeIndex + 1 < memesNew.size()) {
+                    meme = memesNew.get(currentNewMemeIndex + 1);
+                } else {
+                    MemeReceiver memeReceiver = new MemeReceiver();
+                    try {
+                        meme = memeReceiver.getNewMeme(currentNewMemeIndex + 1);
+                    } catch (InterruptedException | JSONException e) {
+                        textViewDescriptionMeme.setText(R.string.loading_error);
+                        e.printStackTrace();
+                    } finally {
+                    }
+                    memesNew.add(meme);
+                }
+
+                setMeme(meme);
+                currentNewMemeIndex++;
+                break;
         }
 
-        setMeme(meme);
-        currentMemeIndex++;
     }
 
     public void previousMeme() {
+        switch (mode) {
+            case MODE_RANDOM:
+                if (currentRandomMemeIndex > 0) {
+                    currentRandomMemeIndex--;
+                    Meme meme = memesRandom.get(currentRandomMemeIndex);
+                    setMeme(meme);
+                }
+                break;
 
-        if (currentMemeIndex > 0) {
-            currentMemeIndex--;
-            Meme meme = memes.get(currentMemeIndex);
-            setMeme(meme);
+            case MODE_TOP:
+                if (currentTopMemeIndex > 0) {
+                    currentTopMemeIndex--;
+                    Meme meme = memesTop.get(currentTopMemeIndex);
+                    setMeme(meme);
+                }
+                break;
+
+            case MODE_NEW:
+                if (currentNewMemeIndex > 0) {
+                    currentNewMemeIndex--;
+                    Meme meme = memesNew.get(currentNewMemeIndex);
+                    setMeme(meme);
+                }
+                break;
+
         }
 
     }
 
     public boolean isFirstPosition() {
-        return currentMemeIndex == 0;
+        switch (mode) {
+            case MODE_RANDOM:
+                return currentRandomMemeIndex == 0;
+            case MODE_TOP:
+                return currentTopMemeIndex == 0;
+            case MODE_NEW:
+                return currentNewMemeIndex == 0;
+        }
+        return false;
+    }
+
+    public void setMode(int mode) {
+        this.mode = mode;
+    }
+
+    public int getMode() {
+        return mode;
     }
 
     private void setMeme(Meme meme) {
@@ -67,5 +159,6 @@ public class MemeController {
 
         textViewDescriptionMeme.setText(meme.getDescription());
     }
+
 
 }
