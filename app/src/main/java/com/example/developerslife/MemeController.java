@@ -167,6 +167,27 @@ public class MemeController {
         return false;
     }
 
+    public void updateMeme() {
+        if (isNullPosition()) {
+            nextMeme();
+            return;
+        }
+
+        Meme meme = null;
+        switch (mode) {
+            case MODE_RANDOM:
+                meme = memesRandom.get(currentRandomMemeIndex);
+                break;
+            case MODE_TOP:
+                meme = memesTop.get(currentTopMemeIndex);
+                break;
+            case MODE_NEW:
+                meme = memesNew.get(currentNewMemeIndex);
+                break;
+        }
+        setMeme(meme);
+    }
+
     public void setMode(int mode) {
         this.mode = mode;
     }

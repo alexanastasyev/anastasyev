@@ -131,9 +131,6 @@ public class MemeReceiver {
 
         @Override
         protected JSONObject doInBackground(String... strings) {
-
-            publishProgress();
-
             URL url = null;
             HttpURLConnection httpURLConnection = null;
 

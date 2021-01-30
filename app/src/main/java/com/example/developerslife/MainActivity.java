@@ -66,18 +66,12 @@ public class MainActivity extends AppCompatActivity {
         memeController.nextMeme();
         floatingActionButtonPrevious.setClickable(true);
         floatingActionButtonPrevious.setBackgroundTintList(ColorStateList.valueOf(getResources().getColor(R.color.clickable)));
-        if (memeController.isNullPosition()) {
-            floatingActionButtonPrevious.setClickable(false);
-            floatingActionButtonPrevious.setBackgroundTintList(ColorStateList.valueOf(getResources().getColor(R.color.not_clickable)));
-        }
+        setFloatingActionButtonMode();
     }
 
     public void onClickPrevious(View view) {
         memeController.previousMeme();
-        if (memeController.isFirstPosition()) {
-            floatingActionButtonPrevious.setClickable(false);
-            floatingActionButtonPrevious.setBackgroundTintList(ColorStateList.valueOf(getResources().getColor(R.color.not_clickable)));
-        }
+        setFloatingActionButtonMode();
     }
 
     public void onClickSetModeTop(View view) {
@@ -86,18 +80,8 @@ public class MainActivity extends AppCompatActivity {
             textViewModeTop.setTextColor(getResources().getColor(R.color.chosen));
             textViewModeNew.setTextColor(getResources().getColor(R.color.not_chosen));
             textViewModeRandom.setTextColor(getResources().getColor(R.color.not_chosen));
-            memeController.nextMeme();
-            if (memeController.isFirstPosition()) {
-                floatingActionButtonPrevious.setClickable(false);
-                floatingActionButtonPrevious.setBackgroundTintList(ColorStateList.valueOf(getResources().getColor(R.color.not_clickable)));
-            } else {
-                floatingActionButtonPrevious.setClickable(true);
-                floatingActionButtonPrevious.setBackgroundTintList(ColorStateList.valueOf(getResources().getColor(R.color.clickable)));
-            }
-            if (memeController.isNullPosition()) {
-                floatingActionButtonPrevious.setClickable(false);
-                floatingActionButtonPrevious.setBackgroundTintList(ColorStateList.valueOf(getResources().getColor(R.color.not_clickable)));
-            }
+            memeController.updateMeme();
+            setFloatingActionButtonMode();
         }
     }
 
@@ -107,18 +91,8 @@ public class MainActivity extends AppCompatActivity {
             textViewModeTop.setTextColor(getResources().getColor(R.color.not_chosen));
             textViewModeNew.setTextColor(getResources().getColor(R.color.chosen));
             textViewModeRandom.setTextColor(getResources().getColor(R.color.not_chosen));
-            memeController.nextMeme();
-            if (memeController.isFirstPosition()) {
-                floatingActionButtonPrevious.setClickable(false);
-                floatingActionButtonPrevious.setBackgroundTintList(ColorStateList.valueOf(getResources().getColor(R.color.not_clickable)));
-            } else {
-                floatingActionButtonPrevious.setClickable(true);
-                floatingActionButtonPrevious.setBackgroundTintList(ColorStateList.valueOf(getResources().getColor(R.color.clickable)));
-            }
-            if (memeController.isNullPosition()) {
-                floatingActionButtonPrevious.setClickable(false);
-                floatingActionButtonPrevious.setBackgroundTintList(ColorStateList.valueOf(getResources().getColor(R.color.not_clickable)));
-            }
+            memeController.updateMeme();
+            setFloatingActionButtonMode();
         }
     }
 
@@ -128,18 +102,18 @@ public class MainActivity extends AppCompatActivity {
             textViewModeTop.setTextColor(getResources().getColor(R.color.not_chosen));
             textViewModeNew.setTextColor(getResources().getColor(R.color.not_chosen));
             textViewModeRandom.setTextColor(getResources().getColor(R.color.chosen));
-            memeController.nextMeme();
-            if (memeController.isFirstPosition()) {
-                floatingActionButtonPrevious.setClickable(false);
-                floatingActionButtonPrevious.setBackgroundTintList(ColorStateList.valueOf(getResources().getColor(R.color.not_clickable)));
-            } else {
-                floatingActionButtonPrevious.setClickable(true);
-                floatingActionButtonPrevious.setBackgroundTintList(ColorStateList.valueOf(getResources().getColor(R.color.clickable)));
-            }
-            if (memeController.isNullPosition()) {
-                floatingActionButtonPrevious.setClickable(false);
-                floatingActionButtonPrevious.setBackgroundTintList(ColorStateList.valueOf(getResources().getColor(R.color.not_clickable)));
-            }
+            memeController.updateMeme();
+            setFloatingActionButtonMode();
+        }
+    }
+
+    private void setFloatingActionButtonMode() {
+        if (memeController.isFirstPosition() || memeController.isNullPosition()) {
+            floatingActionButtonPrevious.setClickable(false);
+            floatingActionButtonPrevious.setBackgroundTintList(ColorStateList.valueOf(getResources().getColor(R.color.not_clickable)));
+        } else {
+            floatingActionButtonPrevious.setClickable(true);
+            floatingActionButtonPrevious.setBackgroundTintList(ColorStateList.valueOf(getResources().getColor(R.color.clickable)));
         }
     }
 }
