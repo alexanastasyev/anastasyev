@@ -246,8 +246,8 @@ public class MemeController {
     }
 
     /*
-        Выводит предыдущий мем из категории "рандом".
-        Если есть - то из кэша, иначе - загружает с сайта.
+        Выводит предыдущий мем из категории "рандом",
+        если он есть.
     */
     private void previousRandomMeme() {
         if (currentRandomMemeIndex > 0) {
@@ -258,8 +258,8 @@ public class MemeController {
     }
 
     /*
-        Выводит предыдущий мем из категории "топ".
-        Если есть - то из кэша, иначе - загружает с сайта.
+        Выводит предыдущий мем из категории "топ",
+        если он есть.
     */
     private void previousTopMeme() {
         if (currentTopMemeIndex > 0) {
@@ -270,8 +270,8 @@ public class MemeController {
     }
 
     /*
-        Выводит предыдущий мем из категории "новое".
-        Если есть - то из кэша, иначе - загружает с сайта.
+        Выводит предыдущий мем из категории "новое",
+        если он есть.
     */
     private void previousNewMeme() {
         if (currentNewMemeIndex > 0) {

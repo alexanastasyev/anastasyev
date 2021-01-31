@@ -69,7 +69,7 @@ public class MainActivity extends AppCompatActivity {
 
     // Нажатие на кнопку "назад"
     public void onClickPrevious(View view) {
-        // Устанавливаем предыдущий мем и проверяем, должны ли кнопка "назад" оставаться активной.
+        // Устанавливаем предыдущий мем и проверяем, должна ли кнопка "назад" оставаться активной.
         memeController.previousMeme();
         setFloatingActionButtonPreviousMode();
     }

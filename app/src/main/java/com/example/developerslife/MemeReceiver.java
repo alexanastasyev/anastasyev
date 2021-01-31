@@ -40,8 +40,8 @@ public class MemeReceiver {
                 throw new JSONException("Ошибка загрузки!");
             }
             String gifUrl = json.getString(GIF_URL_KEY);
-            String descriptionGif = json.getString(GIF_DESCRIPTION_KEY);
-            return new Meme(gifUrl, descriptionGif);
+            String description = json.getString(GIF_DESCRIPTION_KEY);
+            return new Meme(gifUrl, description);
         } catch (ExecutionException e) {
             e.printStackTrace();
         } catch (InterruptedException e) {
@@ -78,8 +78,8 @@ public class MemeReceiver {
             for (int i = 0; i < MEMES_PER_PAGE; i++) {
                 JSONObject memeSingleJson = memesJsonArray.getJSONObject(i);
                 String gifUrl = memeSingleJson.getString(GIF_URL_KEY);
-                String descriptionGif = memeSingleJson.getString(GIF_DESCRIPTION_KEY);
-                result.add(new Meme(gifUrl, descriptionGif));
+                String description = memeSingleJson.getString(GIF_DESCRIPTION_KEY);
+                result.add(new Meme(gifUrl, description));
             }
             return result.get(memeIndex);
         } catch (
@@ -120,8 +120,8 @@ public class MemeReceiver {
             for (int i = 0; i < MEMES_PER_PAGE; i++) {
                 JSONObject memeSingleJson = memesJsonArray.getJSONObject(i);
                 String gifUrl = memeSingleJson.getString(GIF_URL_KEY);
-                String descriptionGif = memeSingleJson.getString(GIF_DESCRIPTION_KEY);
-                result.add(new Meme(gifUrl, descriptionGif));
+                String description = memeSingleJson.getString(GIF_DESCRIPTION_KEY);
+                result.add(new Meme(gifUrl, description));
             }
             return result.get(memeIndex);
         } catch (
