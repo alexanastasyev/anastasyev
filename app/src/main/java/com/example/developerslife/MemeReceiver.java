@@ -181,7 +181,4 @@ public class MemeReceiver {
             return null;
         }
     }
-
-
-
 }
