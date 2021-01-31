@@ -1,6 +1,7 @@
 package com.example.developerslife;
 
 import android.content.Context;
+import android.graphics.drawable.Drawable;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -288,7 +289,8 @@ public class MemeController {
         Glide
                 .with(context)
                 .load(meme.getGifUrl())
-                .into(imageViewMeme);
+                .into(imageViewMeme)
+                .onLoadStarted(context.getDrawable(R.drawable.loading));
 
         textViewDescriptionMeme.setText(meme.getDescription());
     }
